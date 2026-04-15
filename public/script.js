@@ -1,8 +1,15 @@
 async function sendFile() {
     const fileInput = document.getElementById("fileInput");
+    
+    if (fileInput.files.length === 0) {
+        alert("กรุณาเลือกไฟล์ด้วยครับ!");
+        return;
+    }
+    
     const file = fileInput.files[0];
     const formData = new FormData();
     formData.append('file', file);
+
     response = await fetch('/sendFile', {
         method: 'POST',
         body: formData
@@ -26,8 +33,5 @@ async function sendData() {
             data: { text: input.value } 
         })
     });
-
-    input.value = "";
-    loadMessages();
 }
 
