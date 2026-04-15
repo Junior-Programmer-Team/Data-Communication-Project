@@ -11,3 +11,15 @@ async function sendData() {
 
     console.log(data)
 }
+async function sendFile() {
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    response = await fetch('http://localhost:3000/sendFile', {
+        method: 'POST',
+        body: formData
+    });
+    const data = await response.json();
+    console.log(data);
+}
