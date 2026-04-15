@@ -1,7 +1,7 @@
 async function sendData() {
     const input_text = document.getElementById("inputTest").value;
 
-    const response = await fetch('http://localhost:3000/input', {
+    const response = await fetch('/input', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input_text })
@@ -10,4 +10,8 @@ async function sendData() {
     const data = await response.json();
 
     console.log(data)
+}
+
+async function sendToDatabase() {
+    const input_to_db = document.getElementById("inputDB").value;
 }
