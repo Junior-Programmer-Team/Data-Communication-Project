@@ -24,6 +24,7 @@ const initDB = async () => {
 
 initDB();
 
+
 module.exports = {
     query: (text, params) => pool.query(text, params)
 };

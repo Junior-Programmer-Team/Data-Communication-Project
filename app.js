@@ -6,6 +6,7 @@ const multer = require('multer');
 const cors = require('cors');
 
 const { uploadFile } = require("./upload");
+const { insertIntoDB } = require("./db_service");
 
 app.use(cors());
 app.use(express.json());
@@ -49,22 +50,63 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
             return res.status(400).json({ message: 'กรุณาเลือกไฟล์' });
         }
         console.log('ข้อมูลไฟล์:', req.file);
-
         const originalName = req.file.originalname;
+
+        // Upload to R2
         const fileUrl = await uploadFile(
             req.file.buffer,
             "Text", 
             Date.now() + "-" + originalName,
             req.file.mimetype
         );
-        console.log({ status: "Success!", filename: originalName, url: fileUrl })
-        res.json({ filename: originalName, url: fileUrl });
+
+        // Commit into Database
+        const result = await insertIntoDB(
+            req.file.originalname,
+            req.file.fieldname,
+            {   url: fileUrl,
+                filename: req.file.originalname
+             }
+        );
+
+        console.log({ 
+            status: "Success!", 
+            filename: originalName, 
+            url: fileUrl ,
+            savedMessage: result.rows[0]
+        })
+
+        res.json({ 
+            filename: originalName, 
+            url: fileUrl,
+            savedMessage: result.rows[0]
+        });
+
     } catch (error) {
         console.error("สาเหตุที่ Error:", error);
         res.status(500).json({ error: error.message });
     }
 });
 
+
+// Get Normal (Text) from Frontend
+app.post('/message', async (req, res) => {
+    try {
+        const { username, mas_type, data } = req.body;
+
+        const result = await insertIntoDB(
+            username,
+            mas_type,
+            data,
+        ); 
+
+        console.log({ Status: "Success!", savedMessage: result.rows[0]});
+
+    } catch (Error) {
+        console.error("Error saving message:", error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server: http://localhost:${PORT}`));
