@@ -2,6 +2,17 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const port = 4000;
+// const API_KEY = 
+
+
+message_Obj = {
+        "type": message_type,
+        "data": content,
+    }
+
+function SendMessage() {
+    message_Obj
+}
 
 Dirname = "D:\\work\\my_work\\Second_year\\Second Semester\\Data Communication\\Project";
 
