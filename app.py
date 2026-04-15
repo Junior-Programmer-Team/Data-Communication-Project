@@ -20,15 +20,15 @@ db = SQLAlchemy(app)
 # Table Model
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    message = db.Column(db.text(80))
+    message = db.Column(db.String(80))
 
 # Create Table (First time only)
 with app.app_context():
     db.create_all()
 
 # Input send to database and console.log 
-@app.route('/input', methods='POST')
-def inputToDB():
+@app.post('/input')
+def sendToDB():
     data = request.json
     messageText = data.get('input_text')
 
@@ -53,4 +53,4 @@ def static_proxy(path):
 if __name__ == '__main__':
     app.run(host="0.0.0.0", 
             port=int(os.environ.get("PORT", 3000)), 
-            debug = os.environ.get("ENV") != "production")
+            debug = os.environ.get("ENV") != "production" )
