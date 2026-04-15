@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=], initial-scale=1.0">
-    <title>TEST</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Chat</title>
 </head>
 <body>
-    <input type="text" id="inputTest" placeholder="Typing here..">
-    <button onclick="sendData()">Talk to Server</button>
+    <h2>Anonymous Chat</h2>
+    <div id="chat-box"></div>
     
-    <input type="text" id="inputDB" placeholder="Typing here..">
-    <button onclick="sendToDatabase()">Send to Database</button>
+    <div class="input-area">
+        <input type="text" id="username" placeholder="ชื่อเล่น (ว่างไว้ = anon)">
+        <input type="text" id="inputTest" placeholder="พิมพ์ข้อความ...">
+        <button onclick="sendData()">ส่ง</button>
+    </div>
 
     <script src="script.js"></script>
 </body>
