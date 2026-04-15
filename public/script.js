@@ -10,6 +10,4 @@ async function sendtoDB() {
     const data = await response.json();
 
     console.log(data)
-
-    input_text.innerText = "";
 }

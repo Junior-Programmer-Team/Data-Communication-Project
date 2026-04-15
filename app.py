@@ -28,7 +28,7 @@ with app.app_context():
 
 # Input send to database and console.log 
 @app.post('/input')
-def sendToDB():
+def sendtoDB():
     data = request.json
     messageText = data.get('input_text')
 
