@@ -44,7 +44,7 @@ const domainUrl = process.env.DOMAIN_URL || "";
 // }
 async function uploadFile(fileBuffer, bucket, key, contentType) {
     try {
-        console.log("Check upload.js, line 47");
+        console.log("============================");
         const command = new PutObjectCommand({
             Bucket: bucket,
             Key: key,

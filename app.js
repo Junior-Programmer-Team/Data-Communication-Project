@@ -20,26 +20,27 @@ app.use(express.static('public'));
 //     }
 // });
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 // ---- Send File Function ---- //
 // app.post('/sendFile', upload.single('file'), (req, res) => {
 //     console.log("===================================");
 //     try {
 //         if (!req.file) {
-//             return res.status(400).json({ message: 'กรุณาเลือกไฟล์' });
-//         }
-//         console.log('ข้อมูลไฟล์:', req.file);
-
-//         res.json({
-//             message: 'อัปโหลดสำเร็จ!',
-//             fileDetail: req.file
-//         });
+//                 return res.status(400).json({ message: 'กรุณาเลือกไฟล์' });
+//             }
+//             console.log('ข้อมูลไฟล์:', req.file);
+    
+//             res.json({
+//                 message: 'อัปโหลดสำเร็จ!',
+//                 fileDetail: req.file
+//             });
 //     } catch (error) {
 //         res.status(500).json({ error: error.message });
 //     }
 // });
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 app.post('/sendFile', upload.single('file'), async (req, res) => {
     console.log("===================================");
@@ -47,7 +48,8 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
         if (!req.file) {
             return res.status(400).json({ message: 'กรุณาเลือกไฟล์' });
         }
-        console.log(req.file)
+        console.log('ข้อมูลไฟล์:', req.file);
+
         const originalName = req.file.originalname;
         const fileUrl = await uploadFile(
             req.file.buffer,
