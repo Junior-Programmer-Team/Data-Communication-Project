@@ -1,7 +1,7 @@
-async function sendtoDB() {
+async function sendData() {
     const input_text = document.getElementById("inputTest").value;
 
-    const response = await fetch('/input', {
+    const response = await fetch('http://localhost:3000/input', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input_text })
