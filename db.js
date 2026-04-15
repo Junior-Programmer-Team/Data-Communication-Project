@@ -16,7 +16,7 @@ const initDB = async () => {
     );`;
     try {
         await pool.query(queryText);
-        console.log(" Database Table Ready");
+        console.log(" 💜 Database Table Ready ヾ(≧▽≦*)o");
     } catch (err) {
         console.error("DB Init Error:", err);
     }
