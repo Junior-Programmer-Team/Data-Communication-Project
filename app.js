@@ -43,12 +43,15 @@ const storage = multer.diskStorage({
     }
   });
   
-  
-const io = require('socket.io')(3000, {
+const http = require('http')
+const server = http.createServer(app)
+const io = require('socket.io')(server, {
   cors: { origin: "*" } 
 });
 
 io.on('connection', (socket) => {
+
+  console.log('Log in')
   // 1. Listening for a message from a specific client
   socket.on('chat-message', (data) => {
     console.log(`User ${socket.id} sent: ${data}`);
@@ -58,11 +61,8 @@ io.on('connection', (socket) => {
   });
 });
   
-
-
-  
-  const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-  });
+});
   
