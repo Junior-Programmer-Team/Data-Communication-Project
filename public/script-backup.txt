@@ -37,3 +37,8 @@ async function sendData() {
     });
 }
 
+TextMessage = {
+    "senderId": "socket_id_or_username", 
+    "content": "Hello everyone!",
+    "timestamp": "2026-04-16T18:53:03Z"
+}

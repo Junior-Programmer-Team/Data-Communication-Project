@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const time = getCurrentTime();
         
         // Output to html
-        const msgHTML = `
+        const msgHTML = ` 
             <div class="user-message">
                 <p class="time">${time}</p>
                 <p class="user-bubble">${text}</p>
@@ -77,13 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="other-chat">
                 <img class="icon" src="Picture/Icon-User.png" alt="icon-user">
                 <div class="other-message">
-                    <p class="time">${time}</p>
-                    <p class="user-bubble">${data}</p>
+                <p class="user-bubble">${data}</p>
+                <p class="time">${time}</p>
                 </div>
             </div>
         `;
 
         chatHistory.insertAdjacentHTML('beforeend', msgHTML);
+        scrollToBottom();
     });
     
     

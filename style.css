@@ -63,12 +63,17 @@ header{
     display: flex;
     flex-direction: row;
     gap: 8px;
+    width: 100%;
+    width: fit-content;
 }
+
 .other-message{
     display: flex;
     flex-direction: row;
     gap: 8px;
     align-items: end;
+    width: fit-content;
+     /* Preserves your line breaks and spaces */
 }
 
 .send-file{
@@ -82,6 +87,7 @@ header{
 }
 
 .other-bubble{
+    display: inline-block;
     border: 2px solid var(--DarkBrown);
     background-color: var(--LightBrown);
     color: var(--White);
@@ -89,7 +95,9 @@ header{
     border-radius: 25px;
     font-size: 20px;;
     margin: 0px;
-    max-width: 50%;
+    word-break: break-word;      /* Breaks long strings (like "aaaaaaa...") */
+    overflow-wrap: anywhere;
+    width: fit-content;
 }
 
 #file{
@@ -128,6 +136,7 @@ header{
     font-size: 20px;;
     margin: 0px;
     max-width: 50%;
+    
 }
 
 #user-send-img{
