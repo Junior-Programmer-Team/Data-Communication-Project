@@ -8,7 +8,7 @@ const pool = new Pool({
 const initDB = async () => {
     const queryText = `
     CREATE TABLE IF NOT EXISTS messages (
-        id SERIAL PRIMARY KEY,
+        id UUID PRIMARY KEY,
         username VARCHAR(50),
         msg_type VARCHAR(20),
         data JSONB,

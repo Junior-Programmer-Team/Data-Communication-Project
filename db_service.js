@@ -1,4 +1,5 @@
 const db = require('./db');
+const { v4: uuidv4 } = require('uuid');
 
 /**
  * 
@@ -8,8 +9,9 @@ const db = require('./db');
  * @returns 
  */
 const insertIntoDB = async (username="anon", msg_type="image", jsonData) => {
-    const sql = `INSERT INTO messages (username, msg_type, data) VALUES ($1, $2, $3) RETURNING *`;
-    const result = await db.query(sql, [username, msg_type, jsonData]);
+    const id = uuidv4();
+    const sql = `INSERT INTO messages (id, username, msg_type, data) VALUES ($1, $2, $3, $4) RETURNING *`;
+    const result = await db.query(sql, [id, username, msg_type, jsonData]);
 
     return result
 };

@@ -20,7 +20,7 @@ body{
     flex-direction: column;
     justify-self: center;
     width: stretch;
-    margin: 50px;
+    margin: 3% 6%;
 }
 
 header{
@@ -109,9 +109,15 @@ header{
     justify-content: flex-end; 
     align-self: flex-end; 
     width: 100%;
+
+    .img-sendFile {
+        background-color: transparent;
+        border: transparent;
+        display: contents;
+    }
 }
 
-#file{
+.file {
     max-width: 100%;
     background-color: var(--LightGray);
     border-radius: 17px;
@@ -124,7 +130,8 @@ header{
 .send-img{
     max-width: 25%;
     border-radius: 10px;
-    max-width: 200px;
+    max-width: 80%;
+    width: 600px;
 }
 
 .user{
@@ -143,7 +150,7 @@ header{
     margin: 8px 0px;
 }
 
-.user-bubble{
+.user-bubble {
     border: 2px solid var(--DarkBrown);
     background-color: var(--White);
     color: var(--DarkBrown);
@@ -191,3 +198,7 @@ header{
     margin: 0;
     padding-bottom: 5px;
 }
+
+/* #efefe_id[isSender="true"] {
+
+} */

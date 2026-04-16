@@ -1,7 +1,6 @@
 require('dotenv').config(); // for environment || .env
 const express = require('express');
 const app = express();
-const db = require("./db"); // for database
 const multer = require('multer');
 const cors = require('cors');
 
@@ -40,8 +39,7 @@ app.use(express.static('public'));
 //     }
 // });
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer();
 
 app.post('/sendFile', upload.single('file'), async (req, res) => {
     console.log("===================================");
@@ -51,36 +49,37 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
         }
         console.log('ข้อมูลไฟล์:', req.file);
         const originalName = req.file.originalname;
+        const msgType = req.file.fieldname;
+        const fileType = req.file.mimetype;
 
         // Upload to R2
         const fileUrl = await uploadFile(
             req.file.buffer,
             "DataCommu", 
-            Date.now() + "-" + req.file.originalname,
-            req.file.mimetype
+            Date.now() + "-" + originalName,
+            fileType
         );
 
         // Commit into Database
         const result = await insertIntoDB(
-            req.file.originalname,
-            req.file.fieldname,
-            {   url: fileUrl,
-                filename: req.file.originalname
+            originalName,
+            msgType,
+            {   
+                filename: originalName,
+                filetype: fileType,
+                url: fileUrl,
              }
         );
 
         console.log({ 
             status: "Success!", 
-            filename: originalName, 
+            filename: originalName,
+            filetype: fileType,
             url: fileUrl ,
             savedToDB: result.rows[0]
         })
 
-        res.json({ 
-            filename: originalName, 
-            url: fileUrl,
-            savedMessage: result.rows[0]
-        });
+        res.status(200).json(result.rows[0]);
 
     } catch (error) {
         console.error("สาเหตุที่ Error:", error);
@@ -95,16 +94,18 @@ app.post('/message', async (req, res) => {
         const { username, mas_type, data } = req.body;
 
         const result = await insertIntoDB(
-            "User",
+            username || "User",
             mas_type,
             data,
         ); 
 
         console.log({ Status: "Success!", savedMessage: result.rows[0]});
 
+        res.status(200).json(result.rows[0]);
+
     } catch (Error) {
-        console.error("Error saving message:", error);
-        res.status(500).json({ error: error.message });
+        console.error("Error saving message:", Error);
+        res.status(500).json({ error: Error.message });
     }
 });
 

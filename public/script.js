@@ -1,54 +1,38 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { createMessageElement } from "./scripts/msgElement.js";
+
+export const chatHistory = document.getElementById("chat-history");
+
+
+// document.addEventListener("DOMContentLoaded", () => {
     const sendBtn = document.getElementById("btn-sendchat");
-    const msgInput = document.getElementById("type-msg");
-    const chatHistory = document.getElementById("chat-history");
     const fileBtn = document.getElementById("btn-sendfile");
     const dateArea = document.getElementById("date-time");
-
+    const msgInput = document.getElementById("type-msg");
+    
     // อัปเดตวันที่ด้านบน
     const today = new Date();
-    dateArea.innerText = today.toLocaleDateString('th-TH', { 
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+    dateArea.innerText = today.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
     });
 
     // Input สำหรับการเลือกไฟล์
     const fileInput = document.createElement("input");
     fileInput.type = "file";
 
-    // ฟังก์ชันดึงเวลาปัจจุบัน (HH:MM)
-    function getCurrentTime() {
-        const now = new Date();
-        return now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-    }
-
-    // ฟังก์ชันเลื่อนหน้าจอแชทลงมาล่างสุด
-    function scrollToBottom() {
-        chatHistory.scrollTop = chatHistory.scrollHeight;
-    }
 
     // ----------------------------------------------------
     // Send Text Message into Database
     // ----------------------------------------------------
     async function sendTextMessage() {
-        const text = msgInput.value.trim();
+        const text = msgInput.value;
         if (!text) return; // ถ้าไม่ได้พิมพ์อะไรให้หยุดทำงาน
-
-        const time = getCurrentTime();
-        
-        // Output to html
-        const msgHTML = `
-            <div class="user-message">
-                <p class="time">${time}</p>
-                <p class="user-bubble">${text}</p>
-            </div>
-        `;
-        chatHistory.insertAdjacentHTML('beforeend', msgHTML);
-        msgInput.value = ""; // เคลียร์ช่องพิมพ์
-        scrollToBottom();
+        let response;
 
         // Send data to Backend
         try {
-            await fetch('/message', {
+            response = await fetch('/message', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -61,6 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             console.error("ส่งข้อความไม่สำเร็จ:", err);
         }
+
+        const data = await response.json();
+
+        createMessageElement(data)
+        msgInput.value = ""; // เคลียร์ช่องพิมพ์
+
     }
 
     // ----------------------------------------------------
@@ -70,36 +60,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const file = this.files[0];
         if (!file) return;
 
-        const time = getCurrentTime();
-        let msgHTML = '';
+        // const time = getCurrentTime();
+        // let msgHTML = '';
+        // const messageId = "msg-" + Date.now();
+        // // if File is image >> Preview Image in HTML
+        // if (file.type.startsWith('image/')) {
+        //     const imgURL = URL.createObjectURL(file);
+        //     msgHTML = `
+        //         <div class="send-file" id="user-send-img">
+        //             <p class="time">${time}</p>
+        //             <button><img class="send-img" src="${imgURL}" alt="send picture"></button>
+        //         </div>
+        //     `;
+        // } else {
+        //     msgHTML = `
+        //         <div class="send-file">
+        //             <p class="time">${time}</p>
+        //             <button class="user-bubble" id="file">📁 ${file.name}</button>
+        //         </div>
+        //     `;
+        // }
+        // chatHistory.insertAdjacentHTML('beforeend', msgHTML);
+        // scrollToBottom();
 
-        const messageId = "msg-" + Date.now();
-
-        // if File is image >> Preview Image in HTML
-        if (file.type.startsWith('image/')) {
-            const imgURL = URL.createObjectURL(file);
-            msgHTML = `
-                <div class="send-file" id="user-send-img">
-                    <p class="time">${time}</p>
-                    <img class="send-img" src="${imgURL}" alt="send picture">
-                </div>
-            `;
-        } else {
-            msgHTML = `
-                <div class="send-file">
-                    <p class="time">${time}</p>
-                    <button class="user-bubble" id="file">📁 ${file.name}</button>
-                </div>
-            `;
-        }
-
-        chatHistory.insertAdjacentHTML('beforeend', msgHTML);
-        scrollToBottom();
 
         // Send to Backend > Cloudflare R2 > Save into DB
         const formData = new FormData();
         formData.append('file', file);
-        this.value = ''; // Reset input file
 
         try {
             const response = await fetch('/sendFile', {
@@ -108,7 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             
             const data = await response.json();
+
+            createMessageElement(data)
+            this.value = ''; // Reset input file
+
             console.log("บันทึกไฟล์สำเร็จ!", data);
+
+            
 
         } catch (err) {
             console.error("อัปโหลดไม่สำเร็จ:", err);
@@ -123,8 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sendBtn.addEventListener("click", sendTextMessage);
 
     // กดปุ่ม Enter บนคีย์บอร์ดเพื่อส่งข้อความ
-    msgInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
+    msgInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
             sendTextMessage();
         }
     });
@@ -134,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fileInput.click();
     });
 
-});
+// });
 
 
 //Message Section

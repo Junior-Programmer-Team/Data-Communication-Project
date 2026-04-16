@@ -1,7 +1,7 @@
 from flask import Flask, send_from_directory, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-import os
 import uuid
+import os
 
 app = Flask(__name__, static_folder='public')
 
