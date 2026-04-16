@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=Itim&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Mandali&family=Press+Start+2P&display=swap');
 
+
 *{
-    font-family: Instrument Sans, sans-serif;
+    font-family: Instrument Sans;
 }
 
 :root{
@@ -20,7 +21,8 @@ body{
     flex-direction: column;
     justify-self: center;
     width: stretch;
-    margin: 3% 6%;
+    margin: 50px;
+
 }
 
 header{
@@ -29,16 +31,14 @@ header{
     color: var(--White);
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
-    height: 10%;
 }
 
 .chat-room{
     border: 2px solid var(--DarkBrown);
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-    padding: 5px 20px;
+    padding: 5px 25px;
     background-color: var(--White);
-    height: 87%;
 }
 
 #date-time{
@@ -46,26 +46,6 @@ header{
     font-weight: bold;
     font-size: large;
     color: var(--DarkBrown);
-}
-
-/* Scroll */
-.chat-history {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 50vh; 
-    overflow-y: auto; 
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-/* Scrollbar */
-.chat-history::-webkit-scrollbar {
-    width: 6px;
-}
-.chat-history::-webkit-scrollbar-thumb {
-    background-color: var(--LightBrown);
-    border-radius: 10px;
 }
 
 .other{
@@ -83,6 +63,8 @@ header{
     display: flex;
     flex-direction: row;
     gap: 8px;
+    width: 100%;
+    width: fit-content;
 }
 
 .other-message{
@@ -90,21 +72,8 @@ header{
     flex-direction: row;
     gap: 8px;
     align-items: end;
-}
-
-.other-bubble{
-    border: 2px solid var(--DarkBrown);
-    background-color: var(--LightBrown);
-    color: var(--White);
-    padding: 10px;
-    border-radius: 25px;
-    font-size: 20px;
-    margin: 0px;
-    max-width: 50%;
-    word-wrap: break-word;       /* Forces long words to break and wrap to the next line */
-    overflow-wrap: break-word;   /* Modern version of word-wrap */
-    word-break: break-word;      /* Extra backup for older browsers */
-    white-space: pre-wrap;       /* Preserves your line breaks and spaces */
+    width: fit-content;
+     /* Preserves your line breaks and spaces */
 }
 
 .send-file{
@@ -112,18 +81,26 @@ header{
     flex-direction: row;
     gap: 8px;
     align-items: end;
-    justify-content: flex-end; 
-    align-self: flex-end; 
-    width: 100%;
-
-    .img-sendFile {
-        background-color: transparent;
-        border: transparent;
-        display: contents;
-    }
+    display: flex;
+    flex-direction: row;
+    align-items: end;
 }
 
-.file {
+.other-bubble{
+    display: inline-block;
+    border: 2px solid var(--DarkBrown);
+    background-color: var(--LightBrown);
+    color: var(--White);
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 20px;;
+    margin: 0px;
+    word-break: break-word;      /* Breaks long strings (like "aaaaaaa...") */
+    overflow-wrap: anywhere;
+    width: fit-content;
+}
+
+#file{
     max-width: 100%;
     background-color: var(--LightGray);
     border-radius: 17px;
@@ -135,36 +112,36 @@ header{
 
 .send-img{
     max-width: 25%;
-    border-radius: 10px;
-    max-width: 80%;
-    width: 600px;
 }
 
 .user{
     justify-items: right;
 }
 
-/* จัดให้ข้อความของ User ไปอยู่ด้านขวา */
-.user-message, #user-send-img {
+.user-message{
     display: flex;
     flex-direction: row;
     gap: 8px;
     align-items: end;
-    justify-content: flex-end; 
-    align-self: flex-end; 
-    width: 100%;
+    justify-content: right;
     margin: 8px 0px;
 }
 
-.user-bubble {
+.user-bubble{
     border: 2px solid var(--DarkBrown);
     background-color: var(--White);
     color: var(--DarkBrown);
     padding: 10px;
     border-radius: 25px;
-    font-size: 20px;
+    font-size: 20px;;
     margin: 0px;
     max-width: 50%;
+    
+}
+
+#user-send-img{
+    justify-content: right;
+    margin: 8px 0px;
 }
 
 #icon-sendchat{
@@ -193,18 +170,7 @@ header{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* margin: 40px; */
+    margin: 40px;
     margin-bottom: 28px;
     gap: 10px;
 }
-
-.time {
-    font-size: 12px;
-    color: var(--LightBrown);
-    margin: 0;
-    padding-bottom: 5px;
-}
-
-/* #efefe_id[isSender="true"] {
-
-} */

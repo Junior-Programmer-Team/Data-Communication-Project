@@ -23,9 +23,11 @@ export const chatHistory = document.getElementById("chat-history");
 
 
     // ----------------------------------------------------
-    // Send Text Message into Database
+    // Text Message Handler Show output and store in database
     // ----------------------------------------------------
+    
     async function sendTextMessage() {
+        const text = msgInput.value;
         const text = msgInput.value;
         if (!text) return; // ถ้าไม่ได้พิมพ์อะไรให้หยุดทำงาน
         let response;
@@ -52,6 +54,26 @@ export const chatHistory = document.getElementById("chat-history");
         msgInput.value = ""; // เคลียร์ช่องพิมพ์
 
     }
+
+    // Receiving data from the server
+    socket.on('new-message', (data) => { //handler
+        const time = getCurrentTime();
+
+        const msgHTML = `
+            <div class="other-chat">
+                <img class="icon" src="Picture/Icon-User.png" alt="icon-user">
+                <div class="other-message">
+                <p class="user-bubble">${data}</p>
+                <p class="time">${time}</p>
+                </div>
+            </div>
+        `;
+
+        chatHistory.insertAdjacentHTML('beforeend', msgHTML);
+        scrollToBottom();
+    });
+    
+    
 
     // ----------------------------------------------------
     // Upload File (Image/others file) through Cloud & DB
@@ -113,8 +135,9 @@ export const chatHistory = document.getElementById("chat-history");
     // ----------------------------------------------------
     
     // กดปุ่มส่งข้อความ (ไอคอนเครื่องบินกระดาษ)
+    
     sendBtn.addEventListener("click", sendTextMessage);
-
+    
     // กดปุ่ม Enter บนคีย์บอร์ดเพื่อส่งข้อความ
     msgInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
