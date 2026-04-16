@@ -11,12 +11,18 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+<<<<<<< HEAD
     "@aws-sdk/client-s3": "^3.1030.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
+=======
+    "cors": "^2.8.6",
+>>>>>>> 5e91dfd1ec54dc03bd010645a7d4226b2d058df7
     "express": "^5.2.1",
     "multer": "^2.1.1",
+    "multer": "^2.1.1",
     "pg": "^8.20.0",
+    "socket.io": "^4.8.3",
     "sqlite3": "^6.0.1"
   }
 }

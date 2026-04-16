@@ -37,7 +37,14 @@
             </button>
         </div>
     </div>
+     <div id="ChatBox"></div>
+    <div style="display: flex; flex-direction: row;">
+        <input type="text" id="Message">
 
+        <button type="submit" id="Submit_button" onclick="SendMessage()">Submit</button>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
