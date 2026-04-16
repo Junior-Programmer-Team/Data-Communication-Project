@@ -28,7 +28,6 @@ export const chatHistory = document.getElementById("chat-history");
     
     async function sendTextMessage() {
         const text = msgInput.value;
-        const text = msgInput.value;
         if (!text) return; // ถ้าไม่ได้พิมพ์อะไรให้หยุดทำงาน
         let response;
 
