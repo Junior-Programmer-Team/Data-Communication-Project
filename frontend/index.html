@@ -12,20 +12,16 @@
         <h1>Chat-Room</h1>
     </header>
 
+    <div id="enter-name-container">
+        <h2>Enter Your Name</h2>
+        <input id="enter-name-input" type="text" placeholder="Your name...">
+        <button id="enter-name-submit-btn">Ok</button>
+    </div>
+
     <div class="chat-room">     
-        <p id="date-time">Date Area</p>
+        <p id="date-time"></p>
 
-        <div id="chat-history" class="chat-history">
-            
-            <div class="other-chat">
-                <img class="icon" src="Picture/Icon-User.png" alt="icon-user">
-                <div class="other-message">
-                    <p class="other-bubble">สวัสดี! มีอะไรให้ฉันช่วยไหม?</p>
-                    <p class="time">09:00</p>
-                </div>
-            </div>
-
-        </div>
+        <div id="chat-history"></div>
 
         <div class="input-part">
             <button class="sending" id="btn-sendfile">
@@ -38,14 +34,7 @@
         </div>
     </div>
 
-    <!-- <div id="ChatBox"></div>
-    <div style="display: flex; flex-direction: row;">
-        <input type="text" id="Message">
-
-        <button type="submit" id="Submit_button" onclick="SendMessage()">Submit</button>
-    </div> -->
-
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { chatHistory } from "../script.js";
+import { chatHistory } from "../main.js";
 
 // ฟังก์ชันดึงเวลาปัจจุบัน (HH:MM)
 function convertTimeToHHMM(dateString) {
@@ -13,24 +13,41 @@ function scrollToBottom() {
     chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
+// ....
+function wrapWithOtherChatClass(html) {
+    return `
+    <div class="other-chat">
+        <img class="icon" src="Picture/Icon-User.png" alt="icon-user">
+        ${html}
+    </div>`;
+}
+
 export function createMessageElement(rawData, isSender = true) {
     // const { id, username, msg_type, data, created_at } = rawData;
     const { id, msg_type, data, created_at } = rawData;
 
+    const messageClass = isSender ? 'user-message' : 'other-message';
+    const bubbleClass = isSender ? 'user-bubble' : 'other-bubble';
+    const imageClass = isSender ? 'user-image' : 'other-image';
+    const fileClass = isSender ? 'user-file' : 'other-file';
+
+
     const time = convertTimeToHHMM(created_at);
     let msgHTML;
-
-
 
     // For Text na kub
     if (msg_type === "text") {
         
         msgHTML = `
-            <div class="user-message" isSender="${isSender}">
+            <div class="${messageClass}" isSender="${isSender}">
                 <p class="time">${time}</p>
-                <p class="user-bubble">${data.text}</p>
+                <p class="${bubbleClass}">${data.text}</p>
             </div>
         `;
+
+        if (!isSender) {
+            msgHTML = wrapWithOtherChatClass(msgHTML);
+        }
 
         chatHistory.insertAdjacentHTML('beforeend', msgHTML);
     // For Files na kub
@@ -41,18 +58,22 @@ export function createMessageElement(rawData, isSender = true) {
         // if File is image >> Preview Image in HTML
         if (filetype.startsWith('image/')) {
             msgHTML = `
-                <div class="send-file" id="user-send-img" isSender="${isSender}">
+                <div class="${imageClass}" isSender="${isSender}">
                     <p class="time">${time}</p>
-                    <button id="${downloadId}" class="img-sendFile"><img class="send-img" src="${url}" alt="send picture"></button>
+                    <button id="${downloadId}" class="image-btn-download"><img class="image-preview" src="${url}" alt="${filename}"></button>
                 </div>
             `;
         } else {
             msgHTML = `
-                <div class="send-file" isSender="${isSender}">
+                <div class="${fileClass}" isSender="${isSender}">
                     <p class="time">${time}</p>
-                    <button id="${downloadId}" class="user-bubble file" >📁 ${filename}</button>
+                    <button id="${downloadId}" class="${bubbleClass} file" >📁 ${filename}</button>
                 </div>
             `;
+        }
+
+        if (!isSender) {
+            msgHTML = wrapWithOtherChatClass(msgHTML);
         }
 
         chatHistory.insertAdjacentHTML('beforeend', msgHTML);

@@ -1,7 +1,5 @@
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
-const fs = require("fs");
-const path = require("path");
-require("dotenv").config();
+require('dotenv').config();
 
 const s3 = new S3Client({ // ตั้งค่า S3 Client สำหรับ Cloudflare R2
     region: "auto",
