@@ -55,8 +55,8 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
         // Upload to R2
         const fileUrl = await uploadFile(
             req.file.buffer,
-            "Text", 
-            Date.now() + "-" + originalName,
+            "DataCommu", 
+            Date.now() + "-" + req.file.originalname,
             req.file.mimetype
         );
 
@@ -73,7 +73,7 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
             status: "Success!", 
             filename: originalName, 
             url: fileUrl ,
-            savedMessage: result.rows[0]
+            savedToDB: result.rows[0]
         })
 
         res.json({ 
@@ -95,7 +95,7 @@ app.post('/message', async (req, res) => {
         const { username, mas_type, data } = req.body;
 
         const result = await insertIntoDB(
-            username,
+            "User",
             mas_type,
             data,
         ); 
@@ -107,6 +107,26 @@ app.post('/message', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// const http = require('http')
+// const server = http.createServer(app)
+// const io = require('socket.io')(server, {
+//   cors: { origin: "*" } 
+// });
+
+// io.on('connection', (socket) => {
+
+//   console.log('Log in')
+//   // 1. Listening for a message from a specific client
+//   socket.on('chat-message', (data) => {
+//     console.log(`User ${socket.id} sent: ${data}`);
+
+//     // 3. Sending back to EVERYONE including the sender
+//     io.emit('new-message', data);
+//   });
+// });
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server: http://localhost:${PORT}`));

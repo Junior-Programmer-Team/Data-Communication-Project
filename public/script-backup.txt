@@ -1,0 +1,39 @@
+async function sendFile() {
+    const fileInput = document.getElementById("fileInput");
+    
+    if (fileInput.files.length === 0) {
+        alert("กรุณาเลือกไฟล์ด้วยจ้าา!");
+        return;
+    }
+    
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    response = await fetch('/sendFile', {
+        method: 'POST',
+        body: formData
+    });
+    const data = await response.json();
+    console.log(data);
+
+    fileInput.value = "";
+}
+
+async function sendData() {
+    const user = document.getElementById("username");
+    const input = document.getElementById("inputTest");
+    
+    if (!input.value) return;
+
+    await fetch('/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            username: user.value || "anon", 
+            msg_type: "text", 
+            data: { text: input.value } 
+        })
+    });
+}
+

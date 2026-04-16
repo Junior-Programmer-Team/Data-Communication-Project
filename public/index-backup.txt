@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+</head>
+<body>
+    <!-- select file -->
+    <input type="file" id="fileInput" accept="image/*">
+    <button onclick="sendFile()">Upload File</button>
+
+    <input id="inputTest" placeholder="Typing here..">
+    <button onclick="sendData()">Send to DB</button>
+    <input type="text" id="inputTest" placeholder="Typing here..">
+
+
+    <script src="script.js"></script>
+</body>
+</html>
