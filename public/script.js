@@ -150,3 +150,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+//Message Section
+const socket = io();
+const ChatBox = document.getElementById("ChatBox")
+
+async function SendMessage() {
+    const Message = document.getElementById("Message")
+    
+    
+    if (Message.value !== ""){
+        socket.emit('chat-message', Message.value); //send to handler
+        Message.value=''
+    }
+}
+
+// Receiving data from the server
+socket.on('new-message', (data) => { //handler
+    let chatContent = document.createElement('p');
+    chatContent.textContent = data;
+    ChatBox.appendChild(chatContent)
+});
