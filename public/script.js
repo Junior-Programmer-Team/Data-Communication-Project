@@ -25,23 +25,22 @@ async function sendFile() {
 }
 
 //Message Section
+const socket = io();
+const ChatBox = document.getElementById("ChatBox")
+
 async function SendMessage() {
-    const ChatBox = document.getElementById("ChatBox")
     const Message = document.getElementById("Message")
-
-    const socket = io('http://localhost:3000');
-
+    
+    
     if (Message.value !== ""){
-        socket.emit('chat-message', Message.value); 
-        let chatContent = document.createElement('p');
-        chatContent.textContent = Message.value;
-        ChatBox.appendChild(chatContent)
+        socket.emit('chat-message', Message.value); //send to handler
         Message.value=''
     }
 }
 
+
 // Receiving data from the server
-socket.on('new-message', (data) => {
+socket.on('new-message', (data) => {//handler
     let chatContent = document.createElement('p');
     chatContent.textContent = data;
     ChatBox.appendChild(chatContent)
