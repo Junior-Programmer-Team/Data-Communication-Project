@@ -37,9 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Output to html
         const msgHTML = `
-            <div class="user-message" style="display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 10px;">
-                <p class="user-bubble" style="background-color: #d1f4cc; padding: 10px; border-radius: 15px; margin: 0;">${text}</p>
-                <p class="time" style="font-size: 10px; color: gray; margin: 2px 0 0 0;">${time}</p>
+            <div class="user-message">
+                <p class="time">${time}</p>
+                <p class="user-bubble">${text}</p>
             </div>
         `;
         chatHistory.insertAdjacentHTML('beforeend', msgHTML);
@@ -79,16 +79,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (file.type.startsWith('image/')) {
             const imgURL = URL.createObjectURL(file);
             msgHTML = `
-                <div class="send-file" id="user-send-img" style="display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 10px;">
-                    <img class="send-img" src="${imgURL}" alt="send picture" style="max-width: 200px; border-radius: 10px;">
-                    <p class="time" style="font-size: 10px; color: gray; margin: 2px 0 0 0;">${time} (กำลังส่ง...)</p>
+                <div class="send-file" id="user-send-img">
+                    <p class="time">${time}</p>
+                    <img class="send-img" src="${imgURL}" alt="send picture">
                 </div>
             `;
         } else {
             msgHTML = `
-                <div class="send-file" style="display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 10px;">
-                    <button class="user-bubble" id="file" style="cursor: pointer; padding: 10px; border-radius: 15px;">📁 ${file.name}</button>
-                    <p class="time" style="font-size: 10px; color: gray; margin: 2px 0 0 0;">${time} (กำลังส่ง...)</p>
+                <div class="send-file">
+                    <p class="time">${time}</p>
+                    <button class="user-bubble" id="file">📁 ${file.name}</button>
                 </div>
             `;
         }
@@ -109,24 +109,9 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const data = await response.json();
             console.log("บันทึกไฟล์สำเร็จ!", data);
-            
-            // Delete Stage "(กำลังส่ง...)" after upload
-            const sentMessageDiv = document.getElementById(messageId);
-            if (sentMessageDiv) {
-                const timeStatusElement = sentMessageDiv.querySelector('.time-status');
-                timeStatusElement.innerText = time; // เปลี่ยนเป็นเหลือแค่เวลา (เช่น "15:05")
-            }
 
         } catch (err) {
             console.error("อัปโหลดไม่สำเร็จ:", err);
-
-            // ❌ ถ้าส่งไม่สำเร็จ แจ้งเตือนบน html ให้เห็น (จะได้ไม่ต้องดูจาก console อะนะ)
-            const sentMessageDiv = document.getElementById(messageId);
-            if (sentMessageDiv) {
-                const timeStatusElement = sentMessageDiv.querySelector('.time-status');
-                timeStatusElement.innerText = `${time} (ส่งไม่สำเร็จ ❌)`;
-                timeStatusElement.style.color = "red";
-            }
         }
     });
 
@@ -153,22 +138,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //Message Section
-const socket = io();
-const ChatBox = document.getElementById("ChatBox")
+// const socket = io();
+// const ChatBox = document.getElementById("ChatBox")
 
-async function SendMessage() {
-    const Message = document.getElementById("Message")
+// async function SendMessage() {
+//     const Message = document.getElementById("Message")
     
     
-    if (Message.value !== ""){
-        socket.emit('chat-message', Message.value); //send to handler
-        Message.value=''
-    }
-}
+//     if (Message.value !== ""){
+//         socket.emit('chat-message', Message.value); //send to handler
+//         Message.value=''
+//     }
+// }
 
-// Receiving data from the server
-socket.on('new-message', (data) => { //handler
-    let chatContent = document.createElement('p');
-    chatContent.textContent = data;
-    ChatBox.appendChild(chatContent)
-});
+// // Receiving data from the server
+// socket.on('new-message', (data) => { //handler
+//     let chatContent = document.createElement('p');
+//     chatContent.textContent = data;
+//     ChatBox.appendChild(chatContent)
+// });

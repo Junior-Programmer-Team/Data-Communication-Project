@@ -124,6 +124,7 @@ header{
 .send-img{
     max-width: 25%;
     border-radius: 10px;
+    max-width: 200px;
 }
 
 .user{

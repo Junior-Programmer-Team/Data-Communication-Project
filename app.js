@@ -55,8 +55,8 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
         // Upload to R2
         const fileUrl = await uploadFile(
             req.file.buffer,
-            "Text", 
-            Date.now() + "-" + originalName,
+            "DataCommu", 
+            Date.now() + "-" + req.file.originalname,
             req.file.mimetype
         );
 
@@ -73,7 +73,7 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
             status: "Success!", 
             filename: originalName, 
             url: fileUrl ,
-            savedMessage: result.rows[0]
+            savedToDB: result.rows[0]
         })
 
         res.json({ 
