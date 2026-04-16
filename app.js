@@ -90,43 +90,46 @@ app.post('/sendFile', upload.single('file'), async (req, res) => {
 
 
 // Get Normal (Text) from Frontend
-app.post('/message', async (req, res) => {
-    try {
-        const { username, mas_type, data } = req.body;
+// app.post('/message', async (req, res) => {
+//     try {
+//         const { username, mas_type, data } = req.body;
 
-        const result = await insertIntoDB(
-            "User",
-            mas_type,
-            data,
-        ); 
+//         const result = await insertIntoDB(
+//             "User",
+//             mas_type,
+//             data,
+//         ); 
 
-        console.log({ Status: "Success!", savedMessage: result.rows[0]});
+//         console.log({ Status: "Success!", savedMessage: result.rows[0]});
 
-    } catch (Error) {
-        console.error("Error saving message:", error);
-        res.status(500).json({ error: error.message });
-    }
+//     } catch (Error) {
+//         console.error("Error saving message:", error);
+//         res.status(500).json({ error: error.message });
+//     }
+// });
+
+const http = require('http');
+const server = http.createServer(app)
+const io = require('socket.io')(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
 });
+io.on('connection', (socket) => {
+ 
+  console.log('Log in')
+  // 1. Listening for a message from a specific client
+  socket.on('chat-message', (data) => {
+    console.log(`User ${socket.id} sent: ${data}`);
 
-// const http = require('http')
-// const server = http.createServer(app)
-// const io = require('socket.io')(server, {
-//   cors: { origin: "*" } 
-// });
-
-// io.on('connection', (socket) => {
-
-//   console.log('Log in')
-//   // 1. Listening for a message from a specific client
-//   socket.on('chat-message', (data) => {
-//     console.log(`User ${socket.id} sent: ${data}`);
-
-//     // 3. Sending back to EVERYONE including the sender
-//     io.emit('new-message', data);
-//   });
-// });
+    // 3. Sending back to EVERYONE including the sender
+    console.log("Message sended")
+    io.emit('new-message', data);
+  });
+});
 
 
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server: http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`Server: http://localhost:${PORT}`));

@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const fileBtn = document.getElementById("btn-sendfile");
     const dateArea = document.getElementById("date-time");
 
+    //Socket Libary use for sending message
+    const socket = io();
+    
     // อัปเดตวันที่ด้านบน
     const today = new Date();
     dateArea.innerText = today.toLocaleDateString('th-TH', { 
@@ -27,10 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ----------------------------------------------------
-    // Send Text Message into Database
+    // Text Message Handler Show output and store in database
     // ----------------------------------------------------
+    
     async function sendTextMessage() {
-        const text = msgInput.value.trim();
+        const text = msgInput.value;
         if (!text) return; // ถ้าไม่ได้พิมพ์อะไรให้หยุดทำงาน
 
         const time = getCurrentTime();
@@ -42,26 +46,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p class="user-bubble">${text}</p>
             </div>
         `;
+
         chatHistory.insertAdjacentHTML('beforeend', msgHTML);
+        socket.emit('chat-message', text);
         msgInput.value = ""; // เคลียร์ช่องพิมพ์
         scrollToBottom();
 
         // Send data to Backend
-        try {
-            await fetch('/message', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    username: "User1", // Userrrrrrrrrrrr
-                    mas_type: "text", 
-                    data: { text: text } 
-                })
-            });
-            console.log("บันทึกข้อความลง DB สำเร็จ!");
-        } catch (err) {
-            console.error("ส่งข้อความไม่สำเร็จ:", err);
-        }
+        // try {
+        //     await fetch('/message', {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify({ 
+        //             username: "User1", // Userrrrrrrrrrrr
+        //             mas_type: "text", 
+        //             data: { text: text } 
+        //         })
+        //     });
+        //     console.log("บันทึกข้อความลง DB สำเร็จ!");
+        // } catch (err) {
+        //     console.error("ส่งข้อความไม่สำเร็จ:", err);
+        // }
     }
+
+    // Receiving data from the server
+    socket.on('new-message', (data) => { //handler
+        const time = getCurrentTime();
+
+        const msgHTML = `
+            <div class="other-chat">
+                <img class="icon" src="Picture/Icon-User.png" alt="icon-user">
+                <div class="other-message">
+                    <p class="time">${time}</p>
+                    <p class="user-bubble">${data}</p>
+                </div>
+            </div>
+        `;
+
+        chatHistory.insertAdjacentHTML('beforeend', msgHTML);
+    });
+    
+    
 
     // ----------------------------------------------------
     // Upload File (Image/others file) through Cloud & DB
@@ -120,11 +145,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------
     
     // กดปุ่มส่งข้อความ (ไอคอนเครื่องบินกระดาษ)
+    
     sendBtn.addEventListener("click", sendTextMessage);
-
+    
     // กดปุ่ม Enter บนคีย์บอร์ดเพื่อส่งข้อความ
     msgInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
+            console.log("Keydown")
             sendTextMessage();
         }
     });
@@ -132,28 +159,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // กดปุ่มแนบไฟล์ ให้จำลองการกด input type="file"
     fileBtn.addEventListener("click", () => {
         fileInput.click();
-    });
-
+    });    
 });
-
-
-//Message Section
-// const socket = io();
-// const ChatBox = document.getElementById("ChatBox")
-
-// async function SendMessage() {
-//     const Message = document.getElementById("Message")
-    
-    
-//     if (Message.value !== ""){
-//         socket.emit('chat-message', Message.value); //send to handler
-//         Message.value=''
-//     }
-// }
-
-// // Receiving data from the server
-// socket.on('new-message', (data) => { //handler
-//     let chatContent = document.createElement('p');
-//     chatContent.textContent = data;
-//     ChatBox.appendChild(chatContent)
-// });
