@@ -95,7 +95,7 @@ app.post('/message', async (req, res) => {
         const { username, mas_type, data } = req.body;
 
         const result = await insertIntoDB(
-            username,
+            "User",
             mas_type,
             data,
         ); 
