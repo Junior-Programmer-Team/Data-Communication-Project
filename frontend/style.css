@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=Itim&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Mandali&family=Press+Start+2P&display=swap');
+
+* {
+    font-family: "Kanit";
+}
+
+:root{
+    --Cream : #FCFAF6;
+    --DarkBrown : #3B2A22;
+    --LightBrown: #5B4135;
+    --DarkGray : #343333;
+    --LightGray : #e9e9e9;
+    --White : #fff;
+    --Black : #000;
+
+    --bg-popup: rgba(0,0,0,0.5);
+
+    --border-radius: 20px
+    
+}
+
+/* ================================================
+Pop up Section
+================================================ */ 
+#enter-name-popup {
+    background-color: var(--bg-popup);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+
+    /* ให้ทับได้ */
+    position: fixed;
+
+    /* ให้มันอยู่บนสุด */
+    z-index: 100;
+    left: 0;
+    top: 0;
+
+    backdrop-filter: blur(5px);
+}
+
+#enter-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: var(--White);
+    width: 90%;
+    max-width: 700px;
+
+    padding: 40px 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+
+    gap: 15px;
+
+    /* ซ้อนเนื้อหาที่ล้นขอบ กับกัน scroll */
+    overflow: hidden;
+
+    /* ให้ลูก ๆ อยู่ข้างในนี้นะลูก */
+    position: relative;
+
+
+    h1 {
+        color: var(--DarkBrown);
+        margin: 0px;
+    }
+
+    h3 { 
+        color: var(--LightBrown);
+        margin: 0px;
+
+        opacity: 0.8;
+        margin-bottom: 10px;
+    }
+}
+
+/* --- popup-input ---*/
+#enter-name-input {
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+
+    font-size: 16px;
+    padding: 14px 16px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--DarkBrown);
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    color: var(--DarkGray);
+
+    /* กันไม่ให้ input ทะลุกล่อง */
+    box-sizing: border-box; 
+    outline: none;
+}
+#enter-name-input:focus, #enter-name-input:hover{ 
+    border: 2px solid var(--DarkBrown);
+}
+
+/* --- popup-btn ---*/
+#enter-name-submit-btn {
+    background-color: var(--DarkBrown);
+    color: var(--White);
+    font-size: 16px;
+
+    width: 70%;
+    max-width: 200px;
+
+    padding: 14px;
+    margin-top: 10px;
+
+    border: none;
+    border-radius: var(--border-radius);
+}
+#enter-name-submit-btn:hover {
+    background-color: var(--LightBrown);
+    cursor: pointer;
+
+    transition: background-color 0.2s, color 0.2s;
+}
+
+
+/* ================================================
+Body Chat Section
+================================================ */ 
+html, body {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    /* หน้าเว็บห้ามเลื่อน ให้ไปเลื่อนแค่ในแชทพอ */
+    overflow: hidden; 
+
+    background-color: var(--Cream);
+}
+
+body {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    padding: 2% 5%;
+}
+
+header {
+    text-align: center;
+    background-color: var(--DarkBrown);
+    color: var(--White);
+}
+
+.chat-container {
+    display:flex;
+    flex-direction: column;
+
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    background-color: var(--White);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--DarkBrown);
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#chat-date-time {
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+    color: var(--DarkBrown);
+}
+
+/* ================================================
+Chat History Section (Main Chat)
+================================================ */
+#chat-history {
+    /* กินส่วนที่เหลือให้หมดด */
+    flex: 1;
+
+    /* เลื่อนขึ้นลง */
+    overflow-y: auto;
+
+    /* ห้ามล้นขอบน้า */
+    box-sizing: border-box;
+
+    padding: 1% 2%;
+
+}
+
+#chat-history::-webkit-scrollbar {
+    width: 5px;
+}
+
+#chat-history::-webkit-scrollbar-thumb {
+    background-color: var(--LightBrown);
+    border-radius: 10px;
+}
+
+/* ================================================
+Message Class
+================================================ */ 
+.message-container {
+    display: flex;
+    align-items: end;
+
+    gap: 8px;
+    margin: 8px 0px;
+
+    &[is-sender="true"] {
+        flex-direction: row-reverse;
+    }
+
+    &[is-sender="false"] {
+        flex-direction: row;
+    }
+}
+
+/* ================================================
+Message Content Class
+================================================ */ 
+.message-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 0 1 auto;
+
+    max-width: 40%;
+}
+
+/* ================================================
+Bubble Class
+================================================ */ 
+.message-container[is-sender="false"] {
+    .message-bubble {
+        --bubble-bg: var(--LightBrown);
+        --bubble-color: var(--White);
+    }
+}
+
+.message-bubble {
+    --bubble-bg: var(--White);
+    --bubble-color: var(--DarkBrown);
+
+    background-color: var(--bubble-bg);
+    color: var(--bubble-color);
+
+    border-radius: var(--border-radius);
+    border: 2px solid var(--DarkBrown);
+
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 18px;
+
+    width: fit-content; 
+
+    /* คุมช่องว่าง + การขึ้นบรรทัด */
+    white-space: pre-wrap;
+
+    /* ถ้าข้อความยาวเกินกล่อง จะตัดไปบรรทัดใหม่ */
+    overflow-wrap: break-word;  
+}
+
+/* ================================================
+Image message
+================================================ */
+.image-btn-download {
+    background-color: transparent;
+    border: transparent;
+    display: contents;
+}
+
+.image-preview {
+    width: 100%;
+    border-radius: 10px;
+}
+
+
+/* ================================================
+File Class
+================================================ */ 
+.file {
+    max-width: 100%;
+    background-color: var(--LightGray);
+    border-radius: 17px;
+    border: 1px solid var(--Black);
+    color: var(--DarkGray);
+    padding: 15px;
+    cursor: pointer;
+} 
+
+
+/* ================================================
+Input Section
+================================================ */
+.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 2% 0;
+    gap: 10px;
+}
+
+.input-btn {
+    background-color: var(--White);
+    border: 1px solid var(--White);
+    cursor: pointer;
+}
+
+/* --- Input --- */
+#input-typing {
+    border-radius: var(--border-radius);
+    width: 40%;
+    max-width: 50%;
+
+    text-align: center;
+    font-size: 16px;
+
+    border: 2px solid var(--DarkGray);
+}
+
+
+/* ================================================
+Others
+================================================ */
+#text-username {
+    font-size: 16px;
+    color: var(--LightBrown);
+    padding-bottom: 5px;
+}
+
+/* ====================
+Time
+====================*/
+.time {
+    font-size: 14px;
+    color: var(--LightBrown);
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+/* ====================
+Icon
+====================*/
+#icon {
+    width: 35px;
+}
+
+#other-icon {
+    width: 50px;
+    height: 50px;
+}
+
+
+/* ================================================
+Media Section
+================================================ */
+@media (max-width: 500px) {
+    .message-content {
+        max-width: 90%;
+    }
+}
