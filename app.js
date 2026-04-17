@@ -8,5 +8,4 @@ const server = http.createServer(app)
 createSocketServer(server);
 
 const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => console.log(`Server: http://localhost:${PORT}`));
 server.listen(PORT, () => console.log(`Server: http://localhost:${PORT}`));

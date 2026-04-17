@@ -7,7 +7,7 @@ const fileBtn = document.getElementById("btn-sendfile");
 const dateArea = document.getElementById("date-time");
 const msgInput = document.getElementById("type-msg");
 
-export const enterNameContainer = document.getElementById("enter-name-container");
+export const enterNamePopup = document.getElementById("enter-name-popup");
 export const enterNameInput = document.getElementById("enter-name-input");
 export const enterNameSubmitBtn = document.getElementById("enter-name-submit-btn");
 
@@ -15,6 +15,7 @@ export const enterNameSubmitBtn = document.getElementById("enter-name-submit-btn
 // Initial Setup
 // ------------------------------------------------
 init();
+
 
 // อัปเดตวันที่ด้านบน
 const today = new Date();
@@ -32,7 +33,6 @@ fileInput.type = "file";
 // ----------------------------------------------------
 // Text Message Handler Show output and store in database
 // ----------------------------------------------------
-
 async function sendTextMessage() {
     const text = msgInput.value;
     if (!text) return; // ถ้าไม่ได้พิมพ์อะไรให้หยุดทำงาน

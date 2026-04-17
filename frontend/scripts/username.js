@@ -1,4 +1,4 @@
-import {enterNameContainer ,enterNameInput ,enterNameSubmitBtn} from "../main.js";
+import {enterNamePopup ,enterNameInput ,enterNameSubmitBtn} from "../main.js";
 
 async function checkAlreadyExistsUsername(username) { 
 	const response = await fetch(`/userAlreadyExist?username=${encodeURIComponent(username)}`);
@@ -21,7 +21,7 @@ export function init() {
 				}
 				
 				localStorage.setItem("username", username);
-				enterNameContainer.remove();
+				enterNamePopup.remove();
 			} else {
 				alert("Please enter a valid name.");
 			}
@@ -29,7 +29,7 @@ export function init() {
 
 		enterNameSubmitBtn.addEventListener("click", onSubmit);
 	} else {
-		enterNameContainer.remove();
+		enterNamePopup.remove();
 	}
 }
 
