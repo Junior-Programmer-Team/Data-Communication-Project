@@ -4,8 +4,8 @@ import { init, getUsername } from "./scripts/username.js";
 export const chatHistory = document.getElementById("chat-history");
 const sendBtn = document.getElementById("btn-sendchat");
 const fileBtn = document.getElementById("btn-sendfile");
-const dateArea = document.getElementById("date-time");
-const msgInput = document.getElementById("type-msg");
+const chatDateTime = document.getElementById("chat-date-time");
+const msgInput = document.getElementById("input-typing");
 
 export const enterNamePopup = document.getElementById("enter-name-popup");
 export const enterNameInput = document.getElementById("enter-name-input");
@@ -19,7 +19,7 @@ init();
 
 // อัปเดตวันที่ด้านบน
 const today = new Date();
-dateArea.innerText = today.toLocaleDateString('en-GB', {
+chatDateTime.innerText = today.toLocaleDateString('en-GB', {
     day: '2-digit',
     month: 'short',
     year: 'numeric'

@@ -14,77 +14,57 @@ function scrollToBottom() {
 }
 
 // ....
-function wrapWithOtherChatClass(html) {
+function generateMessageHTML(username, contentHTML, time, isSender) {
+    const profileIconHTML = isSender ? '' : `<img id="other-icon" src="Picture/Icon-User.png" alt="icon-user">`;
+    const usernameHTML = !isSender ? `<span id="text-username">${username}</span>` : '';
+
     return `
-    <div class="other-chat">
-        <img class="icon" src="Picture/Icon-User.png" alt="icon-user">
-        ${html}
+    <div class="other-message message-container" is-sender="${isSender}">
+        ${profileIconHTML}
+
+        <div class="message-content">
+            ${usernameHTML}
+            ${contentHTML}
+        </div>
+        
+        <div class="time">${time}</div>
     </div>`;
 }
 
 export function createMessageElement(rawData, isSender = true) {
     // const { id, username, msg_type, data, created_at } = rawData;
-    const { id, msg_type, data, created_at } = rawData;
-
-    const messageClass = isSender ? 'user-message' : 'other-message';
-    const bubbleClass = isSender ? 'user-bubble' : 'other-bubble';
-    const imageClass = isSender ? 'user-image' : 'other-image';
-    const fileClass = isSender ? 'user-file' : 'other-file';
-
+    const { id, username, msg_type, data, created_at } = rawData;
 
     const time = convertTimeToHHMM(created_at);
     let msgHTML;
 
-    // For Text na kub
     if (msg_type === "text") {
-        
-        msgHTML = `
-            <div class="${messageClass}" isSender="${isSender}">
-                <p class="time">${time}</p>
-                <p class="${bubbleClass}">${data.text}</p>
-            </div>
-        `;
-
-        if (!isSender) {
-            msgHTML = wrapWithOtherChatClass(msgHTML);
-        }
-
-        chatHistory.insertAdjacentHTML('beforeend', msgHTML);
-    // For Files na kub
+        // For Text na kub
+        msgHTML = `<p class="message-bubble">${data.text}</p>`;
     } else {        
+        // For Files na kub
         const { filename, filetype, url } = data;
         const downloadId = `download-${id}`;
 
         // if File is image >> Preview Image in HTML
         if (filetype.startsWith('image/')) {
-            msgHTML = `
-                <div class="${imageClass}" isSender="${isSender}">
-                    <p class="time">${time}</p>
-                    <button id="${downloadId}" class="image-btn-download"><img class="image-preview" src="${url}" alt="${filename}"></button>
-                </div>
-            `;
+            msgHTML = `<button id="${downloadId}" class="image-btn-download"><img class="image-preview" src="${url}" alt="${filename}"></button>`;
         } else {
-            msgHTML = `
-                <div class="${fileClass}" isSender="${isSender}">
-                    <p class="time">${time}</p>
-                    <button id="${downloadId}" class="${bubbleClass} file" >📁 ${filename}</button>
-                </div>
-            `;
+            msgHTML = `<button id="${downloadId}" class="message-bubble file" >📁 ${filename}</button>`;
         }
 
-        if (!isSender) {
-            msgHTML = wrapWithOtherChatClass(msgHTML);
-        }
-
-        chatHistory.insertAdjacentHTML('beforeend', msgHTML);
-
-        const downloadButtonElement = document.querySelector(`#${downloadId}`);
-        if (downloadButtonElement) { 
-            downloadButtonElement.addEventListener('click', () => {
-                window.open(url, '_blank');
-            });
-        }
+        setTimeout(() => {
+            const downloadButtonElement = document.querySelector(`#${downloadId}`);
+            if (downloadButtonElement) {
+                downloadButtonElement.addEventListener('click', () => {
+                    window.open(url, '_blank');
+                });
+            }
+        }, 1);
     }
+
+    msgHTML = generateMessageHTML(username, msgHTML, time, isSender);
+    chatHistory.insertAdjacentHTML('beforeend', msgHTML);
 
     scrollToBottom();
 }

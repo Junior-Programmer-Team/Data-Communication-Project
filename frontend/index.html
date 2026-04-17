@@ -7,11 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <header>
-        <h1>Chat-Room</h1>
-    </header>
-
     <div id="enter-name-popup">
         <div id="enter-name-container">
             <h1>Welcome</h1>
@@ -21,18 +16,19 @@
         </div>
     </div>
 
-    <div class="chat-room">     
-        <p id="date-time"></p>
+    <div class="chat-container">
+        <header><h1>Chat-Room</h1></header>
+        <p id="chat-date-time">0 lll 0000</p>
 
         <div id="chat-history"></div>
 
-        <div class="input-part">
-            <button class="sending" id="btn-sendfile">
-                <img id="icon-sendfile" src="Picture/Icon-sendfile.png" alt="send-file-icon">
+        <div class="input-container">
+            <button class="input-btn" id="btn-sendfile">
+                <img id="icon" src="Picture/Icon-sendfile.png" alt="send-file-icon">
             </button>
-            <input id="type-msg" type="text" placeholder="พิมพ์ข้อความที่นี่...">
-            <button class="sending" id="btn-sendchat">
-                <img id="icon-sendchat" src="Picture/Icon-SendMessage.png" alt="icon-sendmessage">
+            <input id="input-typing" type="text" placeholder="พิมพ์ข้อความที่นี่...">
+            <button class="input-btn" id="btn-sendchat">
+                <img id="icon" src="Picture/Icon-SendMessage.png" alt="icon-sendmessage">
             </button>
         </div>
     </div>

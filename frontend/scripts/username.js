@@ -28,6 +28,11 @@ export function init() {
 		};
 
 		enterNameSubmitBtn.addEventListener("click", onSubmit);
+		enterNameInput.addEventListener("keypress", (event) => {
+			if (event.key === "Enter") {
+				onSubmit();
+			}
+		});
 	} else {
 		enterNamePopup.remove();
 	}
