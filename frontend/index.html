@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Data Communication</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="enter-name-popup">
+        <div id="enter-name-container">
+            <h1>Welcome</h1>
+            <h3>Enter Your username</h3>
+            <input id="enter-name-input" type="text" placeholder="Your name...">
+            <button id="enter-name-submit-btn">ยืนยัน</button>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <header><h1>Chat-Room</h1></header>
+        <p id="chat-date-time"></p>
+
+        <div id="chat-history"></div>
+
+        <div class="input-container">
+            <button class="input-btn" id="btn-sendfile">
+                <img id="icon" src="Picture/Icon-sendfile.png" alt="send-file-icon">
+            </button>
+            <input id="input-typing" type="text" placeholder="พิมพ์ข้อความที่นี่...">
+            <button class="input-btn" id="btn-sendchat">
+                <img id="icon" src="Picture/Icon-SendMessage.png" alt="icon-sendmessage">
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
