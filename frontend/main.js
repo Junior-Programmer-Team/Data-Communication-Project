@@ -25,11 +25,6 @@ chatDateTime.innerText = today.toLocaleDateString('en-GB', {
     year: 'numeric'
 });
 
-// Input สำหรับการเลือกไฟล์
-const fileInput = document.createElement("input");
-fileInput.type = "file";
-
-
 // ----------------------------------------------------
 // Text Message Handler Show output and store in database
 // ----------------------------------------------------
@@ -64,6 +59,9 @@ async function sendTextMessage() {
 // ----------------------------------------------------
 // Upload File (Image/others file) through Cloud & DB
 // ----------------------------------------------------
+const fileInput = document.createElement("input");
+fileInput.type = "file";
+
 fileInput.addEventListener("change", async function() {
     const file = this.files[0];
     if (!file) return;
